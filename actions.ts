@@ -1,18 +1,18 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { writeFile, readFile } from "node:fs/promises";
 
 export const createAdminAction = async () => {
   await writeFile("file-storage.txt", "goncy");
-  revalidatePath("/protected");
+  updateTag("test");
   redirect("/protected");
 };
 
 export const deleteAdminAction = async () => {
   await writeFile("file-storage.txt", "");
-  revalidatePath("/protected");
+  updateTag("test");
 };
 
 export const getAdmin = async () => {

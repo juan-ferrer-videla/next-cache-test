@@ -1,9 +1,12 @@
 import { getAdmin } from "@/actions";
 import { DeleteAdminButton } from "@/components/delete-admin-button";
+import { cacheTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 const ProtectContent = async () => {
+  "use cache";
+  cacheTag("test");
   const isAdmin = !!(await getAdmin());
   console.log("log from protected route", "is authorized?", isAdmin);
   if (!isAdmin) {
