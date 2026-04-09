@@ -7,7 +7,7 @@ const ProtectContent = async () => {
   const isAdmin = !!(await getAdmin());
   console.log("log from protected route", "is authorized?", isAdmin);
   if (!isAdmin) {
-    redirect("/protected/register");
+    redirect("/register");
   }
   return (
     <>
