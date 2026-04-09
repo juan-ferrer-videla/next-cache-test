@@ -2,20 +2,25 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { writeFile, readFile } from "node:fs/promises";
+import { cookies } from "next/headers";
+
+const ADMIN_COOKIE_NAME = "admin";
 
 export const createAdminAction = async () => {
-  await writeFile("file-storage.txt", "goncy");
+  const cookieStore = await cookies();
+  cookieStore.set(ADMIN_COOKIE_NAME, "goncy", { path: "/" });
   revalidatePath("/protected");
   redirect("/protected");
 };
 
 export const deleteAdminAction = async () => {
-  await writeFile("file-storage.txt", "");
+  const cookieStore = await cookies();
+  cookieStore.set(ADMIN_COOKIE_NAME, "", { maxAge: 0, path: "/" });
   revalidatePath("/protected");
 };
 
 export const getAdmin = async () => {
-  const data = await readFile("file-storage.txt");
-  return data.toString();
+  const cookieStore = await cookies();
+  const adminCookie = cookieStore.get(ADMIN_COOKIE_NAME);
+  return adminCookie?.value ?? "";
 };
