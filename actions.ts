@@ -1,32 +1,21 @@
 "use server";
 
-import { eq } from "drizzle-orm";
-import { db } from "./db";
-import { admins } from "./db/schema";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { writeFile, readFile } from "node:fs/promises";
 
 export const createAdminAction = async () => {
-  await db
-    .insert(admins)
-    .values({ name: "goncy", id: 1 })
-    .catch((error) => {
-      console.warn(error);
-    });
+  await writeFile("file-storage.txt", "goncy");
   revalidatePath("/protected");
   redirect("/protected");
 };
 
 export const deleteAdminAction = async () => {
-  await db
-    .delete(admins)
-    .where(eq(admins.id, 1))
-    .catch((error) => {
-      console.warn(error);
-    });
+  await writeFile("file-storage.txt", "");
   revalidatePath("/protected");
 };
 
 export const getAdmin = async () => {
-  return await db.query.admins.findFirst({ where: eq(admins.id, 1) });
+  const data = await readFile("file-storage.txt");
+  return data.toString();
 };

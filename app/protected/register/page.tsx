@@ -10,7 +10,7 @@ const RegisterContent = async () => {
       {admin ? (
         <>
           <p>woops, it does not work on the first try, try it again</p>
-          <p>admin: {admin.name}</p>
+          <p>admin: {admin}</p>
         </>
       ) : (
         <p>After creating it should redirect to Protected route</p>
