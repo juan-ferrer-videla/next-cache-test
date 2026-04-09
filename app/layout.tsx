@@ -34,7 +34,7 @@ export default function RootLayout({
           <nav>
             <ul className="flex justify-center gap-x-3">
               <li>
-                <Link href={"/protected/register"} className="underline">
+                <Link href={"/register"} className="underline">
                   Register
                 </Link>
               </li>
